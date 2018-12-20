@@ -52,15 +52,29 @@ public class Assemble {
     }
 
     private int getOperand() {
-        return 0;
+        int result;
+
+        while (Character.isSpaceChar(lineBuffer[bufIndex]))
+            bufIndex++;
+        result=0;
+        while (Character.isDigit(lineBuffer[bufIndex])&&lineBuffer[bufIndex]!='\n')
+            result=10*result+(lineBuffer[bufIndex++]-'0');
+        return result;
     }
 
     private void instrWrite() {
+        int i, j;
+        char ch;
+
 
     }
 
     public void assemble() {
+        boolean done=false;
+        boolean end=false;
+        int n;
 
+        System.out.println(" == Assembling ... ===");
     }
 
     public int startAddr() {
