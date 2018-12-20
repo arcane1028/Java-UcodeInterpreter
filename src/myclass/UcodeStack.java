@@ -1,7 +1,8 @@
 package myclass;
 
+import static myinterpreter.UcodeInterpreter.STACKSIZE;
+
 public class UcodeStack {
-    public static final int STACKSIZE = 2000;
     private int size;
     private int sp;
     private int stackArray[];

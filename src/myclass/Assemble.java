@@ -2,23 +2,16 @@ package myclass;
 
 import myenum.opcode;
 
+import static myinterpreter.UcodeInterpreter.LABELSIZE;
+import static myinterpreter.UcodeInterpreter.opcodeName;
+
 public class Assemble {
-    int LABELSIZE = 10;
     private int instrCnt;
     private char lineBuffer[];
     private int bufIndex;
     Label labelProcess;
     private char label[];
     public int startAddr;
-
-    public static String[] opcodeName={
-            "notop", "neg",  "inc", "dec", "dup", "swp", "add",
-            "sub",   "mult", "div", "mod", "and", "or",  "gt",
-            "lt",    "ge",   "le",  "eq",  "ne",  "lod", "ldc",
-            "lda",   "ldi",  "ldp", "str", "sti", "ujp", "tjp",
-            "fjp",   "call", "ret", "retv","chkh","chkl","nop",
-            "proc",  "end",  "bgn", "sym", "dump","none"
-    };
 
     public Assemble() {
         instrCnt = 0;
@@ -65,7 +58,7 @@ public class Assemble {
     private void instrWrite() {
         int i, j;
         char ch;
-
+        // TODO dodo
 
     }
 
