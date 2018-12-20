@@ -35,13 +35,16 @@ public class UcodeStack {
         return sp;
     }
 
-    public void spSet() {
-
+    public void spSet(int n) {
+        sp = n;
     }
 
     public void dump() {
-        int i;
-
+        System.out.println("stack dump (address : value)");
+        for (int i = sp - 10; i <= sp; ++i) {
+            System.out.println(i + " : " + stackArray[i]);
+        }
+        System.out.println();
     }
 
     public int operator(int index) {
