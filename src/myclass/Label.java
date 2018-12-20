@@ -1,16 +1,16 @@
 package myclass;
 
 import myenum.ProcessIndex;
+import myinterpreter.UcodeInterpreter;
 import struct.Instruction;
 
 public class Label {
     private LabelEntry[] labelTable;
     private int labelCount;
-    public static Instruction[] instructionBuffer = new Instruction[2000];
+    private static Instruction[] instructionBuffer = UcodeInterpreter.instructionBuffer;
 
     public Label() {
-        int MAXLABELS = 500;
-        this.labelTable = new LabelEntry[MAXLABELS];
+        this.labelTable = new LabelEntry[UcodeInterpreter.MAXLABELS];
         this.labelCount = 2;
 
         labelTable[0] = new LabelEntry(
@@ -29,28 +29,21 @@ public class Label {
                 null
         );
 
-        for (int i = 3; i < MAXLABELS; i++) {
-            labelTable[i] = new LabelEntry(null, 0, null);
+        for (int i = 3; i < UcodeInterpreter.MAXLABELS; i++) {
+            labelTable[i] = new LabelEntry(null, ProcessIndex.UNDEFINED.getValue(), null);
         }
 
     }
-
 
     public void insertLabel(String label, int value) {
         FixUpList node;
         int index;
         for (index = 0; index <= labelCount && labelTable[index].labelName.equals(label); index++) ;
-
+        labelTable[index].address = value;
         if (index > labelCount) {
-            labelTable[index] = new LabelEntry(label, value, null);
-            labelCount = index;
-            /*
             labelTable[index].labelName = label;
             labelCount = index;
-            labelTable[index].instructionList = null;
-            */
         } else {
-            labelTable[index].address = value;
             node = labelTable[index].instructionList;
             labelTable[index].instructionList = null;
             while (node != null) {
@@ -68,15 +61,15 @@ public class Label {
         if (index > labelCount) {
             labelTable[index].labelName = label;
             labelCount = index;
-            node = new FixUpList(-1, null);
+            node = new FixUpList(instruction, null);
             /*
             if (node == null) {
                 System.err.println("findLabel() " + " Out of memory -- new");
             }
             */
             labelTable[index].instructionList = node;
-            node.instructionAddress = instruction;
-            node.next = null;
+            //node.instructionAddress = instruction;
+            //node.next = null;
         } else {
             node = labelTable[index].instructionList;
             if (node != null) {
@@ -93,21 +86,21 @@ public class Label {
         while (prev.next != null) {
             prev = prev.next;
         }
-        node = new FixUpList(-1, null);
+        node = new FixUpList(instruction, null);
         /*
         if (node == null) {
             System.err.println("addFix() " + " Out of memory");
         }
         */
-        node.instructionAddress = instruction;
-        node.next = null;
+        //node.instructionAddress = instruction;
+        //node.next = null;
         prev.next = node;
     }
 
     public void checkUndefinedLabel() {
         for (int index = 0; index <= labelCount; index++) {
             if (labelTable[index].address == ProcessIndex.UNDEFINED.getValue()) {
-                System.err.println("undefined label  " + labelTable[index].labelName);
+                UcodeInterpreter.errmsg("undefined label", labelTable[index].labelName);
             }
         }
     }
