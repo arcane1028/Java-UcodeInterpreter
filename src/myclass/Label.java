@@ -1,18 +1,18 @@
 package myclass;
 
 import myenum.ProcessIndex;
+import struct.Instruction;
 
 public class Label {
     private LabelEntry[] labelTable;
     int labelCount;
+    public static Instruction[] instructionBuffer = new Instruction[2000];
 
 
     public Label() {
         int MAXLABELS = 500;
         this.labelTable = new LabelEntry[MAXLABELS];
         this.labelCount = 2;
-
-        int index;
 
         labelTable[0] = new LabelEntry(
                 "read",
@@ -36,10 +36,46 @@ public class Label {
 
     }
 
+    private void addFix(FixUpList prev, int instruction) {
+
+    }
+
+    public void inserLabel(String label, int value) {
+        FixUpList node;
+        int index;
+        for (index = 0; index <= labelCount && labelTable[index].labelName.equals(label); index++) ;
+
+        if (index > labelCount) {
+            labelTable[index].labelName = label;
+            labelCount = index;
+            labelTable[index].instructionList = null;
+        } else {
+            node = labelTable[index].instructionList;
+            labelTable[index].instructionList = null;
+            while (node != null) {
+                instructionBuffer[node.instructionAddress].value1 = value;
+                node = node.next;
+            }
+        }
+
+    }
+
+    public void findLabel(String label, int instruction) {
+
+    }
+
+    public void checkUndefinedLabel() {
+
+    }
 
     class FixUpList {
         int instructionAddress;
         FixUpList next;
+
+        public FixUpList(int instructionAddress, FixUpList next) {
+            this.instructionAddress = instructionAddress;
+            this.next = next;
+        }
     }
 
     class LabelEntry {
