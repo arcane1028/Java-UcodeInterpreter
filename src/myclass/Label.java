@@ -1,14 +1,12 @@
 package myclass;
 
 import myenum.ProcessIndex;
-import myenum.opcode;
 import struct.Instruction;
 
 public class Label {
     private LabelEntry[] labelTable;
     private int labelCount;
     public static Instruction[] instructionBuffer = new Instruction[2000];
-
 
     public Label() {
         int MAXLABELS = 500;
