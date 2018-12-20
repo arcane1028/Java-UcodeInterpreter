@@ -1,5 +1,6 @@
 package myclass;
 
+
 public class Interpret {
     private UcodeStack stack;
     private int arBase;
@@ -11,6 +12,7 @@ public class Interpret {
         this.arBase = 4;
         this.tcycle = 0;
         this.exeCount = 0;
+
     }
 
     public void execute(int startAddress) {
