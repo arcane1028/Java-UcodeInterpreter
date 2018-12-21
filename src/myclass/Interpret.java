@@ -26,10 +26,10 @@ public class Interpret {
     }
 
     public void execute(int startAddress) throws IOException {
-        int parms = -1;
-        int temp = -1;
-        int temp1 = -1;
-        int pc = -1;
+        int parms = 0;
+        int temp = 0;
+        int temp1 = 0;
+        int pc = 0;
         //int returnAddress;
 
         pc = startAddress;

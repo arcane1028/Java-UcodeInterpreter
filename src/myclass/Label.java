@@ -40,7 +40,7 @@ public class Label {
         int index;
         // TODO 조건 확인
         for (index = 0;
-             index <= labelCount && !labelTable[index].labelName.equals(label);
+             index <= labelCount && labelTable[index].labelName.equals(label);
              index++) ;
         labelTable[index].address = value;
         if (index > labelCount) {
@@ -61,7 +61,7 @@ public class Label {
         int index;
         // TODO 조건 확인
         for (index = 0;
-             index <= labelCount && !labelTable[index].labelName.equals(label);
+             index <= labelCount && labelTable[index].labelName.equals(label);
              index++) ;
 
         if (index > labelCount) {
