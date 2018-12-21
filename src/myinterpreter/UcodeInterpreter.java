@@ -78,7 +78,7 @@ public class UcodeInterpreter {
             outputFile = new BufferedWriter(
                     new FileWriter(new File(filename.split("\\.")[0]+".lst"))
             );
-            inputFile.mark(2000);
+            inputFile.mark(50000);
             Assemble sourceProgram = new Assemble();
             Interpret binaryProgram = new Interpret();
 

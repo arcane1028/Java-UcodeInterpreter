@@ -2,7 +2,6 @@ package myclass;
 
 import myenum.Opcode;
 import myinterpreter.UcodeInterpreter;
-import struct.Instruction;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,14 +9,13 @@ import java.io.IOException;
 import java.util.Formatter;
 import java.util.StringTokenizer;
 
-import static myinterpreter.UcodeInterpreter.LABELSIZE;
 import static myinterpreter.UcodeInterpreter.opcodeName;
 
 public class Assemble {
     private int instrCnt;
     private String line;
     private int bufIndex;
-    Label labelProcess;
+    private Label labelProcess;
     private String label;
     public int startAddr;
 
@@ -26,45 +24,32 @@ public class Assemble {
     private Formatter formatter;
 
     public Assemble() {
-
         instrCnt = 0;
-        //label = new char[UcodeInterpreter.LABELSIZE];
         labelProcess = new Label();
     }
 
     private void getLabel() {
-        int i;
-        //label = new char[UcodeInterpreter.LABELSIZE];
         while (Character.isSpaceChar(line.charAt(bufIndex)))
             bufIndex++;
 
         StringTokenizer st = new StringTokenizer(line);
-        if(bufIndex == 0){
+        if (bufIndex == 0) {
             label = st.nextToken();
-        }else {
+        } else {
             st.nextToken();
             label = st.nextToken();
         }
-        /*
-        for (i = 0;
-             (bufIndex < line.length()) && !Character.isSpaceChar(label[i] = line.charAt(bufIndex));
-             bufIndex++, i++) ;
-        //System.out.println(String.valueOf(label));
-        //label[i] = '\0';
-        */
     }
 
 
     private int getOpcode() {
-        //char mnemonic[] = new char[4];
         String mnemonic = "";
-        int index;
+        int index = 0;
 
         bufIndex = 11;
-        index = 0;
+
         while ((bufIndex < line.length()) && !Character.isSpaceChar(line.charAt(bufIndex)))
             mnemonic += line.charAt(bufIndex++);
-        //mnemonic[index] = '\0';
 
         for (index = Opcode.notop.ordinal(); index < Opcode.none.ordinal(); index++)
             if (opcodeName[index].contentEquals(mnemonic))
