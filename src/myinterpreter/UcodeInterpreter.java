@@ -74,7 +74,7 @@ public class UcodeInterpreter {
                     )
             );
             outputFile = new BufferedWriter(
-                    new FileWriter(new File(filename.split(".")[0]+".lst"))
+                    new FileWriter(new File(filename.split("\\.")[0]+".lst"))
             );
 
             sourceProgram.assemble();
