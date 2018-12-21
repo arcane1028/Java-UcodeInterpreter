@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Formatter;
+import java.util.StringTokenizer;
 
 import static myinterpreter.UcodeInterpreter.LABELSIZE;
 import static myinterpreter.UcodeInterpreter.opcodeName;
@@ -17,7 +18,7 @@ public class Assemble {
     private String line;
     private int bufIndex;
     Label labelProcess;
-    private char label[];
+    private String label;
     public int startAddr;
 
     private BufferedReader inputFile = UcodeInterpreter.inputFile;
@@ -27,20 +28,30 @@ public class Assemble {
     public Assemble() {
 
         instrCnt = 0;
-        label = new char[UcodeInterpreter.LABELSIZE];
+        //label = new char[UcodeInterpreter.LABELSIZE];
         labelProcess = new Label();
     }
 
     private void getLabel() {
         int i;
-        label = new char[UcodeInterpreter.LABELSIZE];
+        //label = new char[UcodeInterpreter.LABELSIZE];
         while (Character.isSpaceChar(line.charAt(bufIndex)))
             bufIndex++;
+
+        StringTokenizer st = new StringTokenizer(line);
+        if(bufIndex == 0){
+            label = st.nextToken();
+        }else {
+            st.nextToken();
+            label = st.nextToken();
+        }
+        /*
         for (i = 0;
              (bufIndex < line.length()) && !Character.isSpaceChar(label[i] = line.charAt(bufIndex));
              bufIndex++, i++) ;
         //System.out.println(String.valueOf(label));
         //label[i] = '\0';
+        */
     }
 
 
@@ -83,7 +94,7 @@ public class Assemble {
 
             for (i = 1; i <= instrCnt; i++) {
                 formatter = new Formatter();
-                formatter.format("%-5s", i );
+                formatter.format("%-5s", i);
                 formatter.format("    (");
                 formatter.format("%-2d", UcodeInterpreter.instructionBuffer[i].opcode);
                 j = UcodeInterpreter.instructionBuffer[i].opcode;
