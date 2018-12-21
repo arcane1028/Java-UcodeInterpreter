@@ -18,7 +18,7 @@ public class Interpret {
     private Instruction instructionBuffer[] = UcodeInterpreter.instructionBuffer;
 
     public Interpret() {
-        this.stack = new UcodeStack(UcodeStack.STACKSIZE);
+        this.stack = new UcodeStack(UcodeInterpreter.STACKSIZE);
         this.arBase = 4;
         this.tcycle = 0;
         this.exeCount = 0;
