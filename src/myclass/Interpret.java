@@ -244,7 +244,7 @@ public class Interpret {
             stack.spSet(stack.top() - 4);
         } else if (processIndex == ProcessIndex.WRITEPROC.getValue()) {
             temp = stack.pop();
-            System.out.print(" ");
+            System.out.print(" "+temp);
             UcodeInterpreter.outputFile.write(" " + temp);
             stack.spSet(stack.top() - 4);
         } else if (processIndex == ProcessIndex.LFPROC.getValue()) {
@@ -274,33 +274,36 @@ public class Interpret {
     private void statistic() throws IOException {
 
         BufferedWriter outputFile = UcodeInterpreter.outputFile;
-        Formatter formatter = new Formatter();
+        Formatter formatter;
 
         outputFile.write("\n\n   **********************\n\n");
         outputFile.write("\n\n\n                 #### Statistics ####\n");
         outputFile.write("\n\n    ****  Static Instruction Counts  ****\n\n\n");
 
-        for (int i = 0, op = Opcode.notop.ordinal(); op <= Opcode.notop.ordinal(); op++) {
+        for (int i = 0, op = Opcode.notop.ordinal(); op <= Opcode.none.ordinal(); op++) {
             if (UcodeInterpreter.staticCnt[op] != 0) {
+                formatter = new Formatter();
                 formatter.format("%-5s  =  %-5d ", UcodeInterpreter.opcodeName[op], UcodeInterpreter.staticCnt[op]);
                 outputFile.write(formatter.toString());
                 i++;
                 if (i % 4 == 0) outputFile.write("\n");
-                formatter.flush();
+                formatter.close();
             }
         }
         outputFile.write("\n\n\n  ****  Dynamic instruction counts  ****\n\n\n");
         for (int i = 0, op = Opcode.notop.ordinal(); op <= Opcode.none.ordinal(); op++) {
             if (UcodeInterpreter.dynamicCnt[op] != 0) {
+                formatter = new Formatter();
                 formatter.format("%-5s  =  %-5d ", UcodeInterpreter.opcodeName[op], UcodeInterpreter.dynamicCnt[op]);
                 i++;
+                outputFile.write(formatter.toString());
                 if (i % 4 == 0) outputFile.write("\n");
-                formatter.flush();
+                formatter.close();
             }
         }
         outputFile.write("\n\n Executable instruction count  =   " + exeCount);
         outputFile.write("\n\n Total execution cycle         =   " + tcycle + "\n");
-        formatter.close();
+
     }
 
 
