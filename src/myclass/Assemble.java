@@ -85,15 +85,13 @@ public class Assemble {
                         j == Opcode.sym.ordinal() || j == Opcode.proc.ordinal()) {
                     formatter.format("%-5d", UcodeInterpreter.instructionBuffer[i].value1);
                     formatter.format("%-5d", UcodeInterpreter.instructionBuffer[i].value2);
-                }else {
+                } else {
                     formatter.format("          ");
                 }
                 formatter.format(")     ");
                 outputFile.write(formatter.toString());
-                ch= (char) inputFile.read();
-                while (ch !='\n'){
+                while ((ch = (char) inputFile.read()) != '\n') {
                     outputFile.write(ch);
-                    ch=(char) inputFile.read();
                 }
                 outputFile.write("\n");
             }
@@ -105,17 +103,59 @@ public class Assemble {
         }
     }
 
-    public void assemble() {
+    public void assemble() throws IOException {
         boolean done = false;
         boolean end = false;
         int n;
 
         System.out.println(" == Assembling ... ===");
+        String eof = "";
+        while ((eof = inputFile.readLine()) != null && !end) {
+            instrCnt++;
+            bufIndex = 0;
+
+            if (!Character.isSpaceChar(lineBuffer[0])) {
+                getLabel();
+                labelProcess.insertLabel(String.valueOf(label), instrCnt);
+            }
+            n = getOpcode();
+            UcodeInterpreter.instructionBuffer[instrCnt].opcode=n;
+            UcodeInterpreter.staticCnt[n]++;
+
+            switch (Opcode.values()[n]) {
+                case chkl:
+                case chkh:
+                case ldc:
+                    UcodeInterpreter.instructionBuffer[instrCnt].value1=getOperand();
+                    break;
+                case lod:
+                case str:
+                case lda:
+                case sym:
+                    UcodeInterpreter.instructionBuffer[instrCnt].value1=getOperand();
+                    UcodeInterpreter.instructionBuffer[instrCnt].value2=getOperand();
+                    break;
+                case proc:
+                    UcodeInterpreter.instructionBuffer[instrCnt].value1=getOperand();
+                    UcodeInterpreter.instructionBuffer[instrCnt].value2=getOperand();
+                    UcodeInterpreter.instructionBuffer[instrCnt].value3=getOperand();
+                    break;
+                case bgn:
+                    UcodeInterpreter.instructionBuffer[instrCnt].value1=getOperand();
+                    startAddr = instrCnt;
+                    done = true;
+                    break;
+                case ujp:
+                case call:
+                case fjp:
+                case tjp:
+                    getLabel();
+                    labelProcess.findLabel(String.valueOf(label), instrCnt);
+                    break;
+                case endop:
+                    if (done) end = true;
+            }
+        }
+        instrWrite();
     }
-
-    public int startAddr() {
-        return 0;
-    }
-
-
 }
