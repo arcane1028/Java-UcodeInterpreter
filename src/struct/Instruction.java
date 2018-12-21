@@ -6,10 +6,10 @@ public class Instruction {
     public int value2;
     public int value3;
 
-    public Instruction(int opcode, int value1, int value2, int value3) {
-        this.opcode = opcode;
-        this.value1 = value1;
-        this.value2 = value2;
-        this.value3 = value3;
+    public Instruction() {
+        this.opcode = -1;
+        this.value1 = -1;
+        this.value2 = -1;
+        this.value3 = -1;
     }
 }

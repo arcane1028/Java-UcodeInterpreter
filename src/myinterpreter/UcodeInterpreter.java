@@ -60,8 +60,10 @@ public class UcodeInterpreter {
     }
 
     public static void run(String filename) {
-        Assemble sourceProgram = new Assemble();
-        Interpret binaryProgram = new Interpret();
+
+        for (int i = 0; i < instructionBuffer.length; i++) {
+            instructionBuffer[i] = new Instruction();
+        }
 
         if (filename == null)
             errmsg("run()", "Wrong filename");
@@ -76,6 +78,9 @@ public class UcodeInterpreter {
             outputFile = new BufferedWriter(
                     new FileWriter(new File(filename.split("\\.")[0]+".lst"))
             );
+            inputFile.mark(2000);
+            Assemble sourceProgram = new Assemble();
+            Interpret binaryProgram = new Interpret();
 
             sourceProgram.assemble();
             binaryProgram.execute(sourceProgram.startAddr);
