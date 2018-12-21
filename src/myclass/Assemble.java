@@ -33,11 +33,13 @@ public class Assemble {
 
     private void getLabel() {
         int i;
+        label = new char[UcodeInterpreter.LABELSIZE];
         while (Character.isSpaceChar(line.charAt(bufIndex)))
             bufIndex++;
         for (i = 0;
              (bufIndex < line.length()) && !Character.isSpaceChar(label[i] = line.charAt(bufIndex));
              bufIndex++, i++) ;
+        //System.out.println(String.valueOf(label));
         //label[i] = '\0';
     }
 
