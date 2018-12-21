@@ -55,9 +55,4 @@ public class UcodeStack {
     public void set(int index, int value) {
         this.stackArray[index] = value;
     }
-
-    // TODO delete operator overloading
-    public int operator(int index) {
-        return stackArray[index];
-    }
 }

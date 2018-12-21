@@ -38,7 +38,6 @@ public class Label {
     public void insertLabel(String label, int value) {
         FixUpList node;
         int index;
-        // TODO 조건 확인
         for (index = 0;
              index <= labelCount && !labelTable[index].labelName.equals(label);
              index++) ;
@@ -59,7 +58,6 @@ public class Label {
     public void findLabel(String label, int instruction) {
         FixUpList node;
         int index;
-        // TODO 조건 확인
         for (index = 0;
              index <= labelCount && !labelTable[index].labelName.equals(label);
              index++) ;
@@ -68,14 +66,7 @@ public class Label {
             labelTable[index].labelName = label;
             labelCount = index;
             node = new FixUpList(instruction, null);
-            /*
-            if (node == null) {
-                System.err.println("findLabel() " + " Out of memory -- new");
-            }
-            */
             labelTable[index].instructionList = node;
-            //node.instructionAddress = instruction;
-            //node.next = null;
         } else {
             node = labelTable[index].instructionList;
             if (node != null) {
@@ -88,18 +79,10 @@ public class Label {
 
     private void addFix(FixUpList prev, int instruction) {
         FixUpList node;
-
         while (prev.next != null) {
             prev = prev.next;
         }
         node = new FixUpList(instruction, null);
-        /*
-        if (node == null) {
-            System.err.println("addFix() " + " Out of memory");
-        }
-        */
-        //node.instructionAddress = instruction;
-        //node.next = null;
         prev.next = node;
     }
 

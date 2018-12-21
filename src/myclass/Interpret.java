@@ -171,16 +171,6 @@ public class Interpret {
                     pc = stack.get(arBase + 2) - 1;
                     arBase = stack.get(arBase + 1);
                     break;
-				  /*
-          case stp:
-                  returnAddress = stack[arBase+2] - 1;
-                  stack.spSet(arBase - 1);
-                  arBase = stack[arBase + 1];
-                  break;
-          case ret:
-                  pc = returnAddress;
-                  break;
-				  */
                 case proc:
                     // value 1: (size of paras + size of local vars)
                     // value 2: block number(base)
@@ -189,8 +179,7 @@ public class Interpret {
                     stack.set(arBase + 3, instructionBuffer[pc].value2);
                     for (temp = stack.get(arBase + 1);
                          stack.get(temp + 3) != instructionBuffer[pc].value3 - 1;
-                         temp = stack.get(temp))
-                        ;
+                         temp = stack.get(temp));
                     stack.set(arBase, temp);
                     break;
                 case endop:
@@ -199,16 +188,9 @@ public class Interpret {
                 case bgn:
                     stack.spSet(stack.top() + instructionBuffer[pc].value1);
                     break;
-		  /*
-		  case ones:
-                  temp = stack.pop();
-                  stack.push(~temp);
-                  break;
-		  */
                 case nop:
                 case sym:
                     break;
-                /* augmented operation code */
                 case incop:
                     temp = stack.pop();
                     stack.push(++temp);
@@ -303,8 +285,5 @@ public class Interpret {
         }
         outputFile.write("\n\n Executable instruction count  =   " + exeCount);
         outputFile.write("\n\n Total execution cycle         =   " + tcycle + "\n");
-
     }
-
-
 }
