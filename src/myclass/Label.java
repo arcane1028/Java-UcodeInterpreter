@@ -38,7 +38,10 @@ public class Label {
     public void insertLabel(String label, int value) {
         FixUpList node;
         int index;
-        for (index = 0; index <= labelCount && labelTable[index].labelName.equals(label); index++) ;
+        // TODO 조건 확인
+        for (index = 0;
+             index <= labelCount && !labelTable[index].labelName.equals(label);
+             index++) ;
         labelTable[index].address = value;
         if (index > labelCount) {
             labelTable[index].labelName = label;
@@ -56,7 +59,10 @@ public class Label {
     public void findLabel(String label, int instruction) {
         FixUpList node;
         int index;
-        for (index = 0; index <= labelCount && labelTable[index].labelName.equals(label); index++) ;
+        // TODO 조건 확인
+        for (index = 0;
+             index <= labelCount && !labelTable[index].labelName.equals(label);
+             index++) ;
 
         if (index > labelCount) {
             labelTable[index].labelName = label;
@@ -105,7 +111,7 @@ public class Label {
         }
     }
 
-    class FixUpList {
+    private class FixUpList {
         int instructionAddress;
         FixUpList next;
 
@@ -115,7 +121,7 @@ public class Label {
         }
     }
 
-    class LabelEntry {
+    private class LabelEntry {
         String labelName;
         int address;
         FixUpList instructionList;
