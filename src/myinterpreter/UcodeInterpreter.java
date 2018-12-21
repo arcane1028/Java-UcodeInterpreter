@@ -1,9 +1,11 @@
 package myinterpreter;
 
+import myclass.Assemble;
+import myclass.Interpret;
 import struct.Instruction;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class UcodeInterpreter {
     public static final int MAXINSTR = 2000;
@@ -56,8 +58,33 @@ public class UcodeInterpreter {
         System.out.println("Error: " + s + ": " + s2);
         System.exit(1);
     }
-    public static void run(String filename){
 
+    public static void run(String filename) {
+        Assemble sourceProgram = new Assemble();
+        Interpret binaryProgram = new Interpret();
+
+        if (filename == null)
+            errmsg("run()", "Wrong filename");
+
+        try {
+            inputFile = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(new File(filename)),
+                            StandardCharsets.UTF_8
+                    )
+            );
+            outputFile = new BufferedWriter(
+                    new FileWriter(new File(filename.split(".")[0]+".lst"))
+            );
+
+            sourceProgram.assemble();
+            binaryProgram.execute(sourceProgram.startAddr);
+
+            inputFile.close();
+            outputFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

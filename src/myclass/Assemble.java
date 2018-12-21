@@ -1,6 +1,6 @@
 package myclass;
 
-import myenum.opcode;
+import myenum.Opcode;
 
 import static myinterpreter.UcodeInterpreter.LABELSIZE;
 import static myinterpreter.UcodeInterpreter.opcodeName;
@@ -36,11 +36,11 @@ public class Assemble {
             mnemonic[index++] = lineBuffer[bufIndex++];
         mnemonic[index] = '\0';
 
-        for (index = opcode.notop.ordinal(); index<opcode.none.ordinal();index++)
+        for (index = Opcode.notop.ordinal(); index< Opcode.none.ordinal(); index++)
             if (String.valueOf(mnemonic).equals(opcodeName[index]))
                 break;
-        if (index==opcode.none.ordinal())
-            System.err.println("error Illegal opcode, "+mnemonic);
+        if (index== Opcode.none.ordinal())
+            System.err.println("error Illegal Opcode, "+mnemonic);
         return index;
     }
 
