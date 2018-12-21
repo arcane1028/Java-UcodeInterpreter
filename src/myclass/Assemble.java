@@ -89,11 +89,11 @@ public class Assemble {
                         j == Opcode.ldc.ordinal() || j == Opcode.bgn.ordinal() ||
                         j == Opcode.ujp.ordinal() || j == Opcode.call.ordinal() ||
                         j == Opcode.fjp.ordinal() || j == Opcode.tjp.ordinal()) {
-                    formatter.format("%-5d     ", UcodeInterpreter.instructionBuffer[i].value1);
+                    formatter.format("%5d     ", UcodeInterpreter.instructionBuffer[i].value1);
                 } else if (j == Opcode.lod.ordinal() || j == Opcode.str.ordinal() || j == Opcode.lda.ordinal() ||
                         j == Opcode.sym.ordinal() || j == Opcode.proc.ordinal()) {
-                    formatter.format("%-5d", UcodeInterpreter.instructionBuffer[i].value1);
-                    formatter.format("%-5d", UcodeInterpreter.instructionBuffer[i].value2);
+                    formatter.format("%5d", UcodeInterpreter.instructionBuffer[i].value1);
+                    formatter.format("%5d", UcodeInterpreter.instructionBuffer[i].value2);
                 } else {
                     formatter.format("          ");
                 }
