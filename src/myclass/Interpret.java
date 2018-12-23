@@ -9,6 +9,7 @@ import struct.Instruction;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Formatter;
+import java.util.Scanner;
 
 public class Interpret {
     private UcodeStack stack;
@@ -30,7 +31,6 @@ public class Interpret {
         int temp = 0;
         int temp1 = 0;
         int pc = 0;
-        //int returnAddress;
 
         pc = startAddress;
         System.out.println(" == Executing ...  ==");
@@ -150,8 +150,8 @@ public class Interpret {
                     stack.push(temp);
                     break;
                 case ldp:
-                    parms = stack.top() + 1;        // save sp
-                    stack.spSet(stack.top() + 4);   // set a frame
+                    parms = stack.top() + 1;
+                    stack.spSet(stack.top() + 4);
                     break;
                 case call:
                     if ((temp = instructionBuffer[pc].value1) < 0) predefinedProcess(temp);
@@ -172,9 +172,6 @@ public class Interpret {
                     arBase = stack.get(arBase + 1);
                     break;
                 case proc:
-                    // value 1: (size of paras + size of local vars)
-                    // value 2: block number(base)
-                    // value 3: static level => lexical level (static chain)
                     stack.spSet(arBase + instructionBuffer[pc].value1 + 3);
                     stack.set(arBase + 3, instructionBuffer[pc].value2);
                     for (temp = stack.get(arBase + 1);
@@ -220,7 +217,8 @@ public class Interpret {
         int temp;
 
         if (processIndex == ProcessIndex.READPROC.getValue()) {
-            System.out.print(data);
+            Scanner sc = new Scanner(System.in);
+            data = sc.nextInt();
             temp = stack.pop();
             stack.set(temp, data);
             stack.spSet(stack.top() - 4);
