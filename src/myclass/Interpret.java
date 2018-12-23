@@ -9,6 +9,7 @@ import struct.Instruction;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Formatter;
+import java.util.Scanner;
 
 public class Interpret {
     private UcodeStack stack;
@@ -220,7 +221,8 @@ public class Interpret {
         int temp;
 
         if (processIndex == ProcessIndex.READPROC.getValue()) {
-            System.out.print(data);
+            Scanner sc = new Scanner(System.in);
+            data = sc.nextInt();
             temp = stack.pop();
             stack.set(temp, data);
             stack.spSet(stack.top() - 4);
